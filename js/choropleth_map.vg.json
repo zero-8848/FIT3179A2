@@ -16,7 +16,7 @@
       "lookup": "Country",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/zero-8848/Monash/FIT3179/A2/main/3_choropleth_map/data/covid_10_10_2020.csv"
+          "url": "https://raw.githubusercontent.com/zero-8848/FIT3179/main/data/cleaned_who_road_deaths.csv"
         },
         "key": "Country",
         "fields": ["DeathRate_BothSexes"]
