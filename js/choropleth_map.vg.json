@@ -8,12 +8,12 @@
     "type": "equalEarth"
   },
   "data": {
-    "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "url": "https://raw.githubusercontent.com/zero-8848/FIT3179/main/js/ne_110m_admin_0_countries.topojson",
     "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
   },
   "transform": [
     {
-      "lookup": "Country",
+      "lookup": "properties.SOVEREIGNT",
       "from": {
         "data": {
           "url": "https://raw.githubusercontent.com/zero-8848/FIT3179/main/data/cleaned_who_road_deaths.csv"
@@ -22,6 +22,7 @@
         "fields": ["DeathRate_BothSexes"]
       }
     }
+    
   ],
   "mark": {
     "type": "geoshape"
@@ -40,7 +41,7 @@
     },
     "tooltip": [
       {
-        "field": "Country",
+        "field": "properties.NAME",
         "type": "nominal",
         "title": "Country"
       },
