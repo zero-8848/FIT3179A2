@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "How Death Rates Relate to Population Density",
+  "data": {
+    "url": "https://raw.githubusercontent.com/zero-8848/FIT3179/main/data/cleaned_who_road_deaths.csv"
+  },
+  "params": [
+    {
+      "name": "Year_Filter",
+      "value": 2000,
+      "bind": {
+        "input": "range",
+        "min": 2000,
+        "max": 2020,
+        "step": 1,
+        "name": "Filter by Year: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Deaths_BothSexes > 0"},
+    {"filter": "datum.Year == Year_Filter"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "DeathRate_BothSexes",
+      "type": "quantitative",
+      "title": "Death Rate (Both Sexes)"
+    },
+    "y": {
+      "field": "population_density",
+      "type": "quantitative",
+      "title": "Population Density"
+    },
+    "tooltip": [
+      {"field": "Country", "type": "nominal"},
+      {"field": "DeathRate_BothSexes", "type": "quantitative"},
+      {"field": "population_density", "type": "quantitative"},
+      {"field": "Year", "type": "quantitative"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "size": {
+          "field": "population_density",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [100, 1000, 5000, 10000, 50000],
+            "range": [10, 50, 150, 200, 300, 400]
+          },
+          "legend": {"format": ".1s"}
+        },
+        "opacity": {"value": 0.6}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'China' || datum['Country'] == 'Australia' || datum['Country'] == 'Italy' || datum['Country'] == 'Yemen' ||  datum['Country'] == 'United States'",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ]
+}
+
