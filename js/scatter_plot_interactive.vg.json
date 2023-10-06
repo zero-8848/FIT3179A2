@@ -13,7 +13,7 @@
       "bind": {
         "input": "range",
         "min": 2000,
-        "max": 2020,
+        "max": 2019,
         "step": 1,
         "name": "Filter by Year: "
       }
