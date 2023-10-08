@@ -20,35 +20,111 @@
     }
   ],
   "transform": [
-    {"filter": "datum.Deaths_BothSexes > 0"},
-    {"filter": "datum.population_density > 0"},
-    {"filter": "datum.Year == Year_Filter"}
+    {
+      "filter": "datum.Deaths_BothSexes > 1"
+    },
+    {
+      "filter": "datum.population_density > 0"
+    },
+    {
+      "filter": "datum.Year == Year_Filter"
+    }
   ],
-  "mark": "point",
   "encoding": {
     "x": {
       "field": "DeathRate_BothSexes",
       "type": "quantitative",
       "title": "Death Rate (Both Sexes)",
-      "scale": {"domain": [1, 50]},
-      "axis": {"tickCount": 5}
-      
+      "scale": {
+        "domain": [
+          0,
+          50
+        ]
+      },
+      "axis": {
+        "tickCount": 5
+      }
     },
     "y": {
       "field": "population_density",
       "type": "quantitative",
       "title": "Population Density",
-      "scale": {"type": "log", "domain": [1, 10000], "base": 10},
+      "scale": {
+        "type": "log",
+        "domain": [
+          1,
+          10000
+        ],
+        "base": 10
+      },
       "axis": {
-        "values": [1, 10, 100, 1000, 10000],
+        "values": [
+          1,
+          10,
+          100,
+          1000,
+          10000
+        ],
         "grid": true
       }
     },
     "tooltip": [
-      {"field": "Country", "type": "nominal"},
-      {"field": "DeathRate_BothSexes", "type": "quantitative"},
-      {"field": "population_density", "type": "quantitative"},
-      {"field": "Year", "type": "quantitative"}
+      {
+        "field": "Country",
+        "type": "nominal"
+      },
+      {
+        "field": "DeathRate_BothSexes",
+        "type": "quantitative",
+        "format": ".2f",
+        "title": "Death Rate"
+      },
+      {
+        "field": "population_density",
+        "type": "quantitative",
+        "format": ".2f",
+        "title": "Population Density"
+      },
+      {
+        "field": "Year",
+        "type": "quantitative"
+      }
     ]
-  }
+  },
+  "layer": [
+    {
+      "mark": "point"
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": 60,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "x": {
+          "field": "DeathRate_BothSexes",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "population_density",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Country",
+          "type": "nominal"
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'Singapore' || datum['Country'] == 'Rwanda'",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ]
 }
