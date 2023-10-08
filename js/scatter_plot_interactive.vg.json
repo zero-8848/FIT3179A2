@@ -21,18 +21,28 @@
   ],
   "transform": [
     {"filter": "datum.Deaths_BothSexes > 0"},
+    {"filter": "datum.population_density > 0"},
     {"filter": "datum.Year == Year_Filter"}
   ],
+  "mark": "point",
   "encoding": {
     "x": {
       "field": "DeathRate_BothSexes",
       "type": "quantitative",
-      "title": "Death Rate (Both Sexes)"
+      "title": "Death Rate (Both Sexes)",
+      "scale": {"domain": [1, 50]},
+      "axis": {"tickCount": 5}
+      
     },
     "y": {
       "field": "population_density",
       "type": "quantitative",
-      "title": "Population Density"
+      "title": "Population Density",
+      "scale": {"type": "log", "domain": [1, 10000], "base": 10},
+      "axis": {
+        "values": [1, 10, 100, 1000, 10000],
+        "grid": true
+      }
     },
     "tooltip": [
       {"field": "Country", "type": "nominal"},
@@ -40,45 +50,5 @@
       {"field": "population_density", "type": "quantitative"},
       {"field": "Year", "type": "quantitative"}
     ]
-  },
-  "layer": [
-    {
-      "mark": "circle",
-      "encoding": {
-        "size": {
-          "field": "population_density",
-          "type": "quantitative",
-          "scale": {
-            "type": "threshold",
-            "domain": [100, 1000, 5000, 10000, 50000],
-            "range": [10, 50, 150, 200, 300, 400]
-          },
-          "legend": {"format": ".1s"}
-        },
-        "opacity": {"value": 0.6}
-      }
-    },
-    {
-      "mark": {
-        "type": "text",
-        "align": "right",
-        "baseline": "middle",
-        "dx": -12,
-        "fontSize": 11.5,
-        "fontStyle": "italic"
-      },
-      "encoding": {
-        "text": {"field": "Country", "type": "nominal"},
-        "color": {"value": "black"},
-        "opacity": {
-          "condition": {
-            "test": "datum['Country'] == 'China' || datum['Country'] == 'Australia' || datum['Country'] == 'Italy' || datum['Country'] == 'Yemen' ||  datum['Country'] == 'United States'",
-            "value": 1
-          },
-          "value": 0
-        }
-      }
-    }
-  ]
+  }
 }
-
